@@ -20,10 +20,10 @@ def pos_titles_from(input_path, output_path = None, options = None):
     tokenizer = Tokenizer()
     tagger = PerceptronTagger()
     line_counter = 0
-    skipped_lines = 0
+    excluded_lines = 0
     for line in finput:
-        log_advance(1000000, line_counter)
         line_counter += 1
+        log_advance(1000000, line_counter)
         if line_counter <= skip:
             continue
         if end and line_counter > end:
@@ -37,17 +37,17 @@ def pos_titles_from(input_path, output_path = None, options = None):
                     print >> foutput, token[0], token[1]
                 print >> foutput
             else:
-                skipped_lines += 1
+                excluded_lines += 1
         except:
             print >> sys.stderr, "Error:", line, sys.exc_info()
-    log_nlines(line_counter, skipped_lines)
+    log_nlines(line_counter - 1, excluded_lines)
 
 def log_advance(step, line_counter):
     if line_counter % step == 0:
         print >> sys.stderr, "Status:", time.strftime("%d/%m/%Y %H:%M:%S"), "Count:", line_counter
 
-def log_nlines(total, skipped):
-    print >> sys.stderr, "Status:", time.strftime("%d/%m/%Y %H:%M:%S"), "Final:", total, skipped
+def log_nlines(total, excluded):
+    print >> sys.stderr, "Status:", time.strftime("%d/%m/%Y %H:%M:%S"), "Last line processed:", total, "- non-English lines:", excluded
 
 def get_streams(input_path, output_path):
     finput = open(input_path, "r")
