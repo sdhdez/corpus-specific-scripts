@@ -1,4 +1,4 @@
-#corpus-preprocessing/msf-academic-graph
+#corpus-specific-scripts/msf-academic-graph
 
 Scripts to pre-process the [Microsoft Academic Graph](https://academicgraph.blob.core.windows.net/graph-2016-02-05/index.html). 
 
