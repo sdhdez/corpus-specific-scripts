@@ -1,2 +1,2 @@
-# corpus-preprocessing
-Scripts to pre-process some corpus.
+# corpus-specific-scripts
+Scripts to pre-process specific corpus.
