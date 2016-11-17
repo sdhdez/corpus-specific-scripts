@@ -40,7 +40,7 @@ def pos_titles_from(input_path, output_path = None, options = None):
                 excluded_lines += 1
         except:
             print >> sys.stderr, "Error:", line, sys.exc_info()
-    log_nlines(line_counter - 1, excluded_lines)
+    log_nlines(line_counter, excluded_lines)
 
 def log_advance(step, line_counter):
     if line_counter % step == 0:
@@ -58,13 +58,13 @@ def get_streams(input_path, output_path):
     return finput, foutput
 
 def get_options(options):
-    skip, take = 0, 0
+    skip, take = 0, None
     for o in options:
         if o[0] == '-s':
             skip = int(o[1])
         if o[0] == '-t':
             take = int(o[1])
-    return skip, skip + take
+    return skip, None if not take else (skip + take)
 
 def _command_line():
     options = []
