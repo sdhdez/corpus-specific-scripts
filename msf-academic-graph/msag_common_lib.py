@@ -14,10 +14,6 @@ def read_sentence_col_fmt(sentences_col_fmt):
         'tokens': [("some_token", "some_pos_tag"), ("some_token", "some_pos_tag"), ... ]
     }
     
-    If not returns None.
-
-
-        
     --- START OF EXAMPLE ---
     7F0016FA
     Evolutionary-Neural JJ
@@ -51,7 +47,10 @@ def read_block(file_stream, read_formated_data, args = []):
 
     Keyword arguments:
     file_stream -- File stream to data. 
+    read_formated_data -- Function to read a block of data
+    args -- Extra arguments to the function
 
+    Returned data is defined by the function 'read_formated_data'.
     """
     returned_data = None
     try:
