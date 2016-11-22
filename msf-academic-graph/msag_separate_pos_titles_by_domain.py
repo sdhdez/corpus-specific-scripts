@@ -1,7 +1,3 @@
-""" 
-This script needs the information loaded in mongodb, 
-see the scripts under load_data_mongodb/ 
-"""
 import sys
 import msag_common_lib as msagcl
 import mdb_common_lib as mdbcl
@@ -28,11 +24,11 @@ def iterate_data(file_stream, domain):
         readed_block = msagcl.read_block(file_stream, msagcl.read_sentence_col_raw)
         if readed_block and readed_block['paper_id']:
             paper_id = readed_block['paper_id']
-            paper = qr.paper_is_there(paper_id)
+            paper = qr.is_there(paper_id)
             if paper:
                 print readed_block['paper_id']
                 print readed_block['data_block']
-                #qr.paper_is_there_debug(paper_id)
+                #qr.is_there_debug(paper_id)
         else:
             break
 

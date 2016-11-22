@@ -12,7 +12,7 @@ class QueryResources:
     def set_domain(self, name):
         self.domain = name
 
-    def paper_is_there(self, paper_id, domain = None):
+    def is_there(self, paper_id, domain = None):
         query = {'_id': paper_id}
         if domain:
             query[domain] = True
@@ -21,7 +21,7 @@ class QueryResources:
         result = self.db.paper_domains.find_one(query)
         return result
 
-    def paper_is_there_debug(self, paper_id):
+    def is_there_debug(self, paper_id):
         """ Debug information, print keywords and fields """
         keywords = self.db.papers_keywords.aggregate([
                 {'$match': {'paper_id': paper_id}},
