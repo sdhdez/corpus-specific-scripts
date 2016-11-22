@@ -22,37 +22,19 @@ def iterate_data(file_stream, domain):
     designs NNS
     --- END FILE EXAMPLE
     """
-    db = mdbcl.get_db()
+    qr = mdbcl.QueryResources()
+    qr.set_domain(domain)
     while True:
         readed_block = msagcl.read_block(file_stream, msagcl.read_sentence_col_raw)
         if readed_block and readed_block['paper_id']:
             paper_id = readed_block['paper_id']
-            paper = db.paper_domains.find_one({'_id': paper_id, domain: True})
+            paper = qr.paper_is_there(paper_id)
             if paper:
                 print readed_block['paper_id']
                 print readed_block['data_block']
-                #debug_information(db, readed_block['paper_id'])
+                #qr.paper_is_there_debug(paper_id)
         else:
             break
-
-def debug_information(db, paper_id):
-    """ Debug information, print keywords and fields """
-    keywords = db.papers_keywords.aggregate([
-            {'$match': {'paper_id': paper_id}},
-            {'$group': {'_id': {'paper_id': '$paper_id', 'field_id': '$field_id'}, 'keywords': {'$push': '$keyword_name'}}}
-        ])
-    for kws in keywords:
-        field_id = kws['_id']['field_id']
-        for k in kws['keywords']:
-            field = db.fields_of_study.find_one({'_id': field_id})
-            if field:
-                field = field['field_name']
-            domains = db.keywords.find_one({'_id': k})
-            if domains:
-                domains.pop('_id', None)
-            print 'Field:', field, ', Keyword:', k, ', Target domains:', domains
-    print
-
 
 if __name__ == "__main__":
     try:
