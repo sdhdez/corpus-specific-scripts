@@ -121,3 +121,18 @@ db.tmpKeywords.find().noCursorTimeout().forEach(function(keyword){
         db.keywords.insert(keyword);
     }
 });
+db.tmpKeywords.find().noCursorTimeout().forEach(function(keyword){
+    var of_interest = false;
+    db.fields_of_study.find({
+        _id: {$in: keyword.fields},
+        computer_science: {$exists: false}, 
+        physics: {$exists: false}, 
+        materials_science: {$exists: false}
+    }).noCursorTimeout().forEach(function(field){
+        of_interest = true;
+    });
+    if(of_interest){
+        delete keyword.fields;
+        db.keywords_not_of_interest.insert(keyword);
+    }
+});
